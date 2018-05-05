@@ -36,6 +36,8 @@
             android:enabled="true"
             android:exported="false">
         </receiver>
+
+        <service android:name=".GPSTracker" />
     </application>
 
 </manifest>
