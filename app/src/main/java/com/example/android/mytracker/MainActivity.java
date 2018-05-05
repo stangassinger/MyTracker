@@ -42,13 +42,21 @@ public class MainActivity extends Activity {
         setContentView(mLocationView);
         mLocationView.setText("Location received: blubber");
         Log.i(TAG, "---->  onCreate");
-        startService(new Intent(getBaseContext(), GPSTracker.class));
     }
 
     @Override
     public void onStart(){
         super.onStart();
         Log.i(TAG, "---->  onStart");
+        startService(new Intent(getBaseContext(), GPSTracker.class));
+    }
+
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        Log.i(TAG, "---->  onStop");
+        stopService(new Intent(getBaseContext(), GPSTracker.class));
     }
 
 

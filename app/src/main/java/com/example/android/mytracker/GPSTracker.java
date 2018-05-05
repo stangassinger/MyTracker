@@ -85,6 +85,7 @@ public class GPSTracker extends Service implements
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "---->  onDestroy");
+        mGoogleApiClient.disconnect();
     }
 
 }
