@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Log.i(TAG, "---->  onCreate");
         mLocationView = new TextView(this);
         setContentView(mLocationView);
         mLocationView.setText("Location received: blubber");
@@ -56,7 +56,8 @@ public class MainActivity extends Activity {
     public void onStop(){
         super.onStop();
         Log.i(TAG, "---->  onStop");
-        stopService(new Intent(getBaseContext(), GPSTracker.class));
+        //startService(new Intent(getBaseContext(), GPSTracker.class));
+
     }
 
 

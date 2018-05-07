@@ -41,12 +41,16 @@ public class GPSTracker extends Service implements
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "---->  onStartCommand " );
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        if ( mGoogleApiClient != null && mGoogleApiClient.isConnected() ){
+            // there is already a valid connection
+        }else{
+           mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
-        mGoogleApiClient.connect();
+          mGoogleApiClient.connect();
+        }
         return START_STICKY;
     }
 
@@ -58,6 +62,7 @@ public class GPSTracker extends Service implements
     @Override
     public void onConnected(Bundle bundle) {
         Log.i(TAG, "---->  onConnected " );
+
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(16000); // Update location every second
@@ -85,7 +90,7 @@ public class GPSTracker extends Service implements
     public void onDestroy() {
         super.onDestroy();
         Log.i(TAG, "---->  onDestroy");
-        mGoogleApiClient.disconnect();
+        //mGoogleApiClient.disconnect();
     }
 
 }
