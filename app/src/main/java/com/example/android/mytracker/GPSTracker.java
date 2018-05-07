@@ -24,7 +24,7 @@ public class GPSTracker extends Service implements
 
 
 
-    private final String TAG = "MyAwesomeApp";
+    private final String TAG = "GPSTracker";
 
 
     private GoogleApiClient mGoogleApiClient;
