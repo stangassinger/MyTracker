@@ -56,8 +56,6 @@ public class MainActivity extends Activity {
     public void onStop(){
         super.onStop();
         Log.i(TAG, "---->  onStop");
-        //startService(new Intent(getBaseContext(), GPSTracker.class));
-
     }
 
 
