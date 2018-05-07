@@ -16,9 +16,11 @@
 package com.example.android.mytracker;
 
 import android.app.Activity;
-import android.app.Service;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -27,11 +29,11 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     private final String TAG = "MyTracker";
-
     private TextView mLocationView;
 
-
-
+    final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+    private static final int NOTIFICATION_ID = 0;
+    final long INTERVAL = 30000;
 
 
     @Override
@@ -42,6 +44,19 @@ public class MainActivity extends Activity {
         setContentView(mLocationView);
         mLocationView.setText("Location received: blubber");
         Log.i(TAG, "---->  onCreate");
+
+
+        AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
+        if (nextAlarm != null){
+            long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
+
+            long repeatInterval =  + INTERVAL;
+            Intent notifyIntent = new Intent(this, AlarmReceiver.class);
+            final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+                    (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime, repeatInterval, notifyPendingIntent);
+        }
     }
 
     @Override
