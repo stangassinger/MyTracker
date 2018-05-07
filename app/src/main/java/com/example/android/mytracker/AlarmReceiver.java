@@ -27,12 +27,12 @@ public class AlarmReceiver extends BroadcastReceiver {
     private final String TAG = "AlarmReceiver";
 
     public AlarmReceiver() {
-        Log.i(TAG, "---->  AlarmReceiver Constructor " );
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "---->  onStartCommand " );
+
+        Log.i(TAG, "---->  ....  onReceive " );
     }
 
 }

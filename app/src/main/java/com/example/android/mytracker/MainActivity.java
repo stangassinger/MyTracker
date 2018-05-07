@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
     private TextView mLocationView;
 
     private static final int NOTIFICATION_ID = 0;
-    final long INTERVAL = 30000;
+    final long INTERVAL = 5000;
 
 
     @Override
@@ -41,7 +41,7 @@ public class MainActivity extends Activity {
         Log.i(TAG, "---->  onCreate");
         mLocationView = new TextView(this);
         setContentView(mLocationView);
-        mLocationView.setText("Location received: blubber");
+        mLocationView.setText("Location received: ------");
         Log.i(TAG, "---->  onCreate");
 
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

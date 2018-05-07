@@ -30,6 +30,7 @@ public class GPSTracker extends Service  implements
     private GoogleApiClient mGoogleApiClient;
 
     private LocationRequest mLocationRequest;
+    private Location last_location;
 
 
     @Override
@@ -84,6 +85,7 @@ public class GPSTracker extends Service  implements
     @Override
     public void onLocationChanged(Location location){
         Log.i(TAG, "---->  Location received: " + location.toString());
+        last_location = location;
     }
 
     @Override
@@ -91,6 +93,11 @@ public class GPSTracker extends Service  implements
         super.onDestroy();
         Log.i(TAG, "---->  onDestroy");
 
+    }
+
+
+    public Location getLastLocation(){
+        return last_location;
     }
 
 }
