@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
     private final String TAG = "MyTracker";
     private TextView mLocationView;
 
-    final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     private static final int NOTIFICATION_ID = 0;
     final long INTERVAL = 30000;
 
@@ -45,11 +44,10 @@ public class MainActivity extends Activity {
         mLocationView.setText("Location received: blubber");
         Log.i(TAG, "---->  onCreate");
 
-
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
         if (nextAlarm != null){
             long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
-
             long repeatInterval =  + INTERVAL;
             Intent notifyIntent = new Intent(this, AlarmReceiver.class);
             final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
