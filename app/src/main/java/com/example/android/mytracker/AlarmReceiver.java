@@ -51,7 +51,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
         LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                 new IntentFilter("GPS_DATA"));
 
-        Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)+" lon: "+Double.toString(last_lon)+" lat: "+Double.toString(last_lat) );
+        Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)
+                +" lon: "+Double.toString(last_lon)
+                +" lat: "+Double.toString(last_lat) );
+        //SendEmail sendEmail = new SendEmail(context);
+        SendSMS sendSMS = new SendSMS();
+
+        //sendSMS.sendSms("012345678", "TEST");
     }
 
 }
