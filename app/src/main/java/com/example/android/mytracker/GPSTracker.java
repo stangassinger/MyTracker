@@ -8,6 +8,7 @@ import android.location.Location;
 import android.os.Bundle;
 
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 
@@ -86,6 +87,7 @@ public class GPSTracker extends Service  implements
     public void onLocationChanged(Location location){
         Log.i(TAG, "---->  Location received: " + location.toString());
         last_location = location;
+        sendMessage(location);
     }
 
     @Override
@@ -93,6 +95,14 @@ public class GPSTracker extends Service  implements
         super.onDestroy();
         Log.i(TAG, "---->  onDestroy");
 
+    }
+
+    private void sendMessage(Location location){
+        Log.i(TAG ,"Broadcasting message sending ");
+        Intent intent = new Intent("GPS_DATA");
+        // You can also include some extra data.
+        intent.putExtra("message", location.getAltitude());
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
 
