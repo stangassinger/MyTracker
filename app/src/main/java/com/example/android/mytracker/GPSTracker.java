@@ -100,7 +100,9 @@ public class GPSTracker extends Service  implements
         Log.i(TAG ,"Broadcasting message sending ");
         Intent intent = new Intent("GPS_DATA");
         // You can also include some extra data.
-        intent.putExtra("message", location.getAltitude());
+        intent.putExtra("message_alt", location.getAltitude());
+        intent.putExtra("message_lon", location.getLongitude());
+        intent.putExtra("message_lat", location.getLatitude());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 

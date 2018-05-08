@@ -27,6 +27,9 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     private static final int NOTIFICATION_ID = 0;
     private final String TAG = "AlarmReceiver";
+    private double last_alt;
+    private double last_lon;
+    private double last_lat;
 
     public AlarmReceiver() {
 
@@ -36,8 +39,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
         @Override
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
-            double alt = intent.getDoubleExtra("message",3);
-            Log.i(TAG, "Got message: " + Double.toString(alt));
+            last_alt = intent.getDoubleExtra("message_alt",0);
+            last_lon = intent.getDoubleExtra("message_lon",0);
+            last_lat = intent.getDoubleExtra("message_lat",0);
+            Log.i(TAG, "---->  .... XXXXXXXXXXXX:  alt:"+Double.toString(last_alt)+" lon: "+Double.toString(last_lon)+" lat: "+Double.toString(last_lat) );
         }
     };
 
@@ -46,7 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
         LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                 new IntentFilter("GPS_DATA"));
 
-        Log.i(TAG, "---->  ....  onReceive " );
+        Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)+" lon: "+Double.toString(last_lon)+" lat: "+Double.toString(last_lat) );
     }
 
 }
