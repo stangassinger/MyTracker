@@ -27,9 +27,9 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     private static final int NOTIFICATION_ID = 0;
     private final String TAG = "AlarmReceiver";
-    private double last_alt;
-    private double last_lon;
-    private double last_lat;
+    static double last_alt = 0;
+    static double last_lon = 0;
+    static double last_lat = 0;
 
     public AlarmReceiver() {
 
