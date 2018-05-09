@@ -32,7 +32,7 @@ public class GMailSender extends javax.mail.Authenticator {
 
     private Multipart _multipart = new MimeMultipart();
     static {
-        Security.addProvider(new com.example.sendmail.JSSEProvider());
+        Security.addProvider(new JSSEProvider());
     }
 
 
