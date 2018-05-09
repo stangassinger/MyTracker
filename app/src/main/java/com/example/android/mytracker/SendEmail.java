@@ -10,12 +10,15 @@ public class SendEmail {
 
     SendEmail(Context context) {
         Log.i(TAG, "---->  .... SendEmail Constructor");
-        Intent i = new Intent(Intent.ACTION_SEND);
-        i.setType("message/rfc822");
-        i.putExtra(Intent.EXTRA_EMAIL,"info@example.cin");
-        i.putExtra(Intent.EXTRA_SUBJECT,"Subject");
-        i.putExtra(Intent.EXTRA_TEXT, "body mail");
-        context.startActivity(i);
+        try {
+            GMailSender sender = new GMailSender("username@gmail.com", "password");
+            sender.sendMail("This is Subject",
+                    "This is Body",
+                    "user@gmail.com",
+                    "user@yahoo.com");
+        } catch (Exception e) {
+            Log.e("SendMail", e.getMessage(), e);
+        }
     }
 
 
