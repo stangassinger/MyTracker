@@ -54,9 +54,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
         Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)
                 +" lon: "+Double.toString(last_lon)
                 +" lat: "+Double.toString(last_lat) );
-        //SendEmail sendEmail = new SendEmail(context);
-        SendSMS sendSMS = new SendSMS();
-
+        SendEmail sendEmail = new SendEmail(context);
+        //SendSMS sendSMS = new SendSMS();
         //sendSMS.sendSms("012345678", "TEST");
     }
 
