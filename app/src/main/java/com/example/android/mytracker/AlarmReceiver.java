@@ -62,8 +62,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
         String email = Config.SEND_TO;
         String subject = "smart-location";
         String message = "alt: " + Double.toString(last_alt) + "\n"
-                +" lon: "+Double.toString(last_lon) + "\n"
-                +" lat: "+Double.toString(last_lat);
+                + Double.toString(last_lat) + ","+Double.toString(last_lon);
 
         //Creating SendMail object
         SendMail sm = new SendMail(email, subject, message);
