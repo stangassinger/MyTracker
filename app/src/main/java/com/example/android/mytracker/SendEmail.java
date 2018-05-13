@@ -10,15 +10,15 @@ public class SendEmail {
 
     SendEmail(Context context) {
         Log.i(TAG, "---->  .... SendEmail Constructor");
-        try {
-            GMailSender sender = new GMailSender("username@gmail.com", "password");
-            sender.sendMail("This is Subject",
-                    "This is Body",
-                    "user@gmail.com",
-                    "user@yahoo.com");
-        } catch (Exception e) {
-            Log.e("SendMail", e.getMessage(), e);
-        }
+        String email = "guenther.stangassinger@gmx.de";
+        String subject = "email subject";
+        String message = "email message";
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(email, subject, message);
+
+        //Executing sendmail to send email
+        sm.execute();
     }
 
 
