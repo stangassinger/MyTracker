@@ -54,9 +54,22 @@ public class AlarmReceiver extends BroadcastReceiver  {
         Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)
                 +" lon: "+Double.toString(last_lon)
                 +" lat: "+Double.toString(last_lat) );
-        SendEmail sendEmail = new SendEmail(context);
+
         //SendSMS sendSMS = new SendSMS();
         //sendSMS.sendSms("012345678", "TEST");
+
+
+        String email = Config.SEND_TO;
+        String subject = "smart-location";
+        String message = "alt: " + Double.toString(last_alt) + "\n"
+                +" lon: "+Double.toString(last_lon) + "\n"
+                +" lat: "+Double.toString(last_lat);
+
+        //Creating SendMail object
+        SendMail sm = new SendMail(email, subject, message);
+
+        //Executing sendmail to send email
+        sm.execute();
     }
 
 }
