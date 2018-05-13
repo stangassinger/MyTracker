@@ -10,7 +10,7 @@ public class SendEmail {
 
     SendEmail(Context context) {
         Log.i(TAG, "---->  .... SendEmail Constructor");
-        String email = "guenther.stangassinger@gmx.de";
+        String email = "email@example.de";
         String subject = "email subject";
         String message = "email message";
 
