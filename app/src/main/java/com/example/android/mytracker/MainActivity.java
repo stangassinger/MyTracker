@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
     private static final int NOTIFICATION_ID = 0;
     final long INTERVAL = 5000;
 
-    private AlarmReceiver receiver = new AlarmReceiver();
+    private AlarmReceiver receiver;
 
 
     @Override
@@ -77,6 +77,8 @@ public class MainActivity extends Activity {
     @Override
     public void onStop(){
         super.onStop();
+
+        this.unregisterReceiver(receiver);
     }
 
 
