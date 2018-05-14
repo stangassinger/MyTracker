@@ -31,6 +31,15 @@ public class AlarmReceiver extends BroadcastReceiver  {
     static double last_lon = 0;
     static double last_lat = 0;
 
+    // Strategy for sending notifications
+    //Wait for 23 hours to finally send notification
+    static int waiting_count = 0;
+    // Wait another 23 hours where notification is sent as soon as possible
+    static int try_to_send_count = 0;
+    // After that time send SMS notification
+    final int COUNTING_TARGET = 4 ; // should be 23 at the final version
+
+
     public AlarmReceiver() {
 
     }
@@ -48,6 +57,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        alarm_receive_count++;
         LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                 new IntentFilter("GPS_DATA"));
 
@@ -58,17 +68,22 @@ public class AlarmReceiver extends BroadcastReceiver  {
         //SendSMS sendSMS = new SendSMS();
         //sendSMS.sendSms("012345678", "TEST");
 
+        if ( waiting_count == COUNTING_TARGET) {
+            Log.i(TAG, "----> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+            waiting_count = 0;
+            //sendMailNotification();
+        }
 
+    }
+
+    private void sendMailNotification(){
         String email = Config.SEND_TO;
         String subject = "smart-location";
         String message = "alt: " + Double.toString(last_alt) + "\n"
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
-
-        //Creating SendMail object
         SendMail sm = new SendMail(email, subject, message);
-
-        //Executing sendmail to send email
         sm.execute();
     }
+
 
 }
