@@ -42,15 +42,11 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        //Showing progress dialog while sending email
-        Log.i(TAG, "---->  .... onPreExecute   Sending message   Please wait...");
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        //Dismissing the progress dialog
-        //Showing a success message
         Log.i(TAG, "---->  .... onPreExecute   Message Sent..." );
     }
 

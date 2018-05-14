@@ -39,11 +39,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "---->  onCreate");
         mLocationView = new TextView(this);
         setContentView(mLocationView);
         mLocationView.setText("Location received: ------");
-        Log.i(TAG, "---->  onCreate");
 
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
@@ -61,7 +59,6 @@ public class MainActivity extends Activity {
     @Override
     public void onStart(){
         super.onStart();
-        Log.i(TAG, "---->  onStart");
         startService(new Intent(getBaseContext(), GPSTracker.class));
     }
 
@@ -69,7 +66,6 @@ public class MainActivity extends Activity {
     @Override
     public void onStop(){
         super.onStop();
-        Log.i(TAG, "---->  onStop");
     }
 
 

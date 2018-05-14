@@ -42,7 +42,6 @@ public class GPSTracker extends Service  implements
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.i(TAG, "---->  onStartCommand " );
         if ( mGoogleApiClient != null && mGoogleApiClient.isConnected() ){
             // there is already a valid connection
         }else{
@@ -63,8 +62,6 @@ public class GPSTracker extends Service  implements
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i(TAG, "---->  onConnected " );
-
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(16000); // Update location every second
@@ -75,29 +72,23 @@ public class GPSTracker extends Service  implements
 
     @Override
     public void onConnectionSuspended(int i) {
-        Log.i(TAG, "---->  GoogleApiClient connection has been suspend");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i(TAG, "---->  GoogleApiClient connection has failed");
     }
 
     @Override
     public void onLocationChanged(Location location){
-        Log.i(TAG, "---->  Location received: " + location.toString());
         sendMessage(location);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "---->  onDestroy");
-
     }
 
     private void sendMessage(Location location){
-        Log.i(TAG ,"Broadcasting message sending ");
         Intent intent = new Intent("GPS_DATA");
         // You can also include some extra data.
         intent.putExtra("message_alt", location.getAltitude());

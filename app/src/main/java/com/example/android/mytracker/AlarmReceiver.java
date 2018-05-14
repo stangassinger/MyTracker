@@ -51,25 +51,21 @@ public class AlarmReceiver extends BroadcastReceiver  {
             last_alt = intent.getDoubleExtra("message_alt",0);
             last_lon = intent.getDoubleExtra("message_lon",0);
             last_lat = intent.getDoubleExtra("message_lat",0);
-            Log.i(TAG, "---->  .... XXXXXXXXXXXX:  alt:"+Double.toString(last_alt)+" lon: "+Double.toString(last_lon)+" lat: "+Double.toString(last_lat) );
         }
     };
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        alarm_receive_count++;
+        waiting_count++;
         LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                 new IntentFilter("GPS_DATA"));
 
-        Log.i(TAG, "---->  ....  onReceive:  alt:"+Double.toString(last_alt)
-                +" lon: "+Double.toString(last_lon)
-                +" lat: "+Double.toString(last_lat) );
 
         //SendSMS sendSMS = new SendSMS();
         //sendSMS.sendSms("012345678", "TEST");
 
         if ( waiting_count == COUNTING_TARGET) {
-            Log.i(TAG, "----> XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+
             waiting_count = 0;
             //sendMailNotification();
         }
