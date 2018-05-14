@@ -19,11 +19,15 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.IntentSender;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.widget.TextView;
+
+
 
 
 
@@ -35,6 +39,8 @@ public class MainActivity extends Activity {
     private static final int NOTIFICATION_ID = 0;
     final long INTERVAL = 5000;
 
+    private AlarmReceiver receiver = new AlarmReceiver();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,11 @@ public class MainActivity extends Activity {
         mLocationView = new TextView(this);
         setContentView(mLocationView);
         mLocationView.setText("Location received: ------");
+
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new AlarmReceiver();
+        this.registerReceiver(receiver, filter);
 
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();

@@ -20,6 +20,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -56,20 +58,38 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        waiting_count++;
-        LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
-                new IntentFilter("GPS_DATA"));
 
 
-        //SendSMS sendSMS = new SendSMS();
-        //sendSMS.sendSms("012345678", "TEST");
+        Log.i(TAG,"-------->  mIRNetwork: Network State Received: "+intent.getAction());
+        if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+            ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = conn.getActiveNetworkInfo();
+            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
 
-        if ( waiting_count == COUNTING_TARGET) {
+                Log.i(TAG, "---->  .... WiFi is connected");
+            } else if (networkInfo != null) {
 
-            waiting_count = 0;
-            //sendMailNotification();
+                Log.i(TAG, "---->  .... WiFi is disconnected");
+
+            } else {
+
+                Log.i(TAG, "---->  .... No active connection");
+            }
+        }else{
+            waiting_count++;
+            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
+                    new IntentFilter("GPS_DATA"));
+
+
+            //SendSMS sendSMS = new SendSMS();
+            //sendSMS.sendSms("012345678", "TEST");
+
+            if ( waiting_count == COUNTING_TARGET) {
+
+                waiting_count = 0;
+                //sendMailNotification();
+            }
         }
-
     }
 
     private void sendMailNotification(){
