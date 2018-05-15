@@ -58,21 +58,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-
-        Log.i(TAG,"-------->  mIRNetwork: Network State Received: "+intent.getAction());
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
-
-                Log.i(TAG, "---->  .... WiFi is connected");
-            } else if (networkInfo != null) {
-
-                Log.i(TAG, "---->  .... WiFi is disconnected");
-
+            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE
+                    && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE ) {
+                Log.i(TAG, "---->  .... Network is connected");
             } else {
-
                 Log.i(TAG, "---->  .... No active connection");
             }
         }else{
