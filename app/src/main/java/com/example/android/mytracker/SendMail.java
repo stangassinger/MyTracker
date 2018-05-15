@@ -50,7 +50,6 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         task_finished = true;
-        Log.i(TAG, "---->  .... onPostExecute" );
     }
 
     @Override

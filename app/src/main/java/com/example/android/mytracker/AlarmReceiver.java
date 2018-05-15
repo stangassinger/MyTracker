@@ -78,31 +78,41 @@ public class AlarmReceiver extends BroadcastReceiver  {
             }
         }else{
             waiting_count++;
+            immediately_waiting_count++;
             LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                     new IntentFilter("GPS_DATA"));
 
 
-            //SendSMS sendSMS = new SendSMS();
-            //sendSMS.sendSms("012345678", "TEST");
-
             if ( waiting_count == COUNTING_TARGET) {
                 waiting_count = 0;
                 if ( network_connection_on == true) {
+                    Log.i(TAG, "--------> waiting_count: " + waiting_count);
                     mail_send_routine();
                 }else{
                     must_send_email_immediately = true;
                 }
             }
+
+
         }
 
         if (must_send_email_immediately == true){
-            mail_send_routine();
+            if (immediately_waiting_count < COUNTING_TARGET) {
+                Log.i(TAG, "--------> immediately_waiting_count: " + immediately_waiting_count);
+                mail_send_routine();
+            }else{
+                Log.i(TAG, "--------> Sending SMS");
+                //SendSMS sendSMS = new SendSMS();
+                //sendSMS.sendSms("012345678", "TEST");
+            }
         }
     }
 
     private void mail_send_routine(){
         if (sendMailNotification() == true){
             must_send_email_immediately = false;
+            immediately_waiting_count = 0;
+            waiting_count = 0;
         }
     }
 
@@ -121,7 +131,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {Log.i(TAG, "------error--> WAITING");}
-            Log.i(TAG, "--------> WAITING");
         }
         if (sm.getmailSendSuccess() ){
             Log.i(TAG, "--------> Sending Mail Successfull");
