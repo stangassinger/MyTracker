@@ -62,6 +62,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        boolean mail_send_success = false;
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();
@@ -69,7 +70,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
                     || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE )) {
                 network_connection_on = true;
                 if (must_send_email_immediately){
-                    sendMailNotification();
+                    mail_send_success = sendMailNotification();
+                    if (mail_send_success == true){
+                        must_send_email_immediately = false;
+                    }
                 }
                 Log.i(TAG, "---->  .... Network is connected");
             } else {
@@ -88,16 +92,31 @@ public class AlarmReceiver extends BroadcastReceiver  {
             if ( waiting_count == COUNTING_TARGET) {
                 waiting_count = 0;
                 if ( network_connection_on == true) {
-                    sendMailNotification();
+                    mail_send_success = sendMailNotification();
+                    if (mail_send_success == true){
+                        must_send_email_immediately = false;
+                    }
                 }else{
                     must_send_email_immediately = true;
                 }
             }
         }
 
+        if (must_send_email_immediately == true){
+            mail_send_success = sendMailNotification();
+            if (mail_send_success == true){
+                must_send_email_immediately = false;
+            }
+        }
     }
 
-    private void sendMailNotification(){
+    private void mail_send_routine(){
+
+
+    }
+
+    private boolean sendMailNotification(){
+        boolean ret = false;
         String email = Config.SEND_TO;
         String subject = "smart-location";
         String message = "alt: " + Double.toString(last_alt) + "\n"
@@ -115,13 +134,12 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
         if (sm.getmailSendSuccess() ){
             Log.i(TAG, "--------> Sending Mail Successfull");
+            ret = true;
         }else{
             Log.i(TAG, "--------> Sending Mail Failed !!!!!");
+            ret = false;
         }
-
-
-
-
+        return ret;
     }
 
 
