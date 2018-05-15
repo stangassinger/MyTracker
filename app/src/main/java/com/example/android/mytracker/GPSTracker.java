@@ -4,7 +4,9 @@ package com.example.android.mytracker;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.location.Location;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import android.os.IBinder;
@@ -32,6 +34,8 @@ public class GPSTracker extends Service  implements
 
     private LocationRequest mLocationRequest;
 
+    private AlarmReceiver receiver;
+
 
 
     @Override
@@ -52,6 +56,12 @@ public class GPSTracker extends Service  implements
                 .build();
           mGoogleApiClient.connect();
         }
+
+        IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+        receiver = new AlarmReceiver();
+        this.registerReceiver(receiver, filter);
+
+
         return START_STICKY;
     }
 
