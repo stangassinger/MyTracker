@@ -65,8 +65,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE
-                    && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE ) {
+            if (networkInfo != null && (networkInfo.getType() == ConnectivityManager.TYPE_WIFI
+                    || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE )) {
                 network_connection_on = true;
                 if (must_send_email_immediately){
                     sendMailNotification();
