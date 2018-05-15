@@ -42,8 +42,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
     static int waiting_count = 0;
     // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
     // After that time send SMS notification
-    final int COUNTING_TARGET = 2 ; // should be 23 at the final version
-    final int UPPER_COUNTING_TARGET = 6;
+    final int COUNTING_TARGET = 23 ; // should be 23 at the final version
+    final int UPPER_COUNTING_TARGET = 46;
 
     public AlarmReceiver() {
 
