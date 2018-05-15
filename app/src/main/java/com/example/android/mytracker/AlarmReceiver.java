@@ -82,19 +82,15 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
             Log.i(TAG, "." + waiting_count);
             if ( waiting_count == COUNTING_TARGET) {
-                if ( network_connection_on == true) {
-                    Log.i(TAG, "--------> waiting_count: " + waiting_count);
-                    mail_send_routine();
-                }else{
-                    must_send_email_immediately = true;
-                }
+                Log.i(TAG, "--------> waiting_count: " + waiting_count);
+                mail_send_routine();
             }
 
 
         }
 
         if (must_send_email_immediately == true){
-            if (waiting_count > COUNTING_TARGET && waiting_count < COUNTING_TARGET*2) {
+            if (waiting_count >= COUNTING_TARGET && waiting_count < COUNTING_TARGET*3) {
                 Log.i(TAG, "--------> waiting_count: " + waiting_count);
                 mail_send_routine();
             }else{
@@ -106,9 +102,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
     }
 
     private void mail_send_routine(){
-        if (sendMailNotification() == true){
-            must_send_email_immediately = false;
-            waiting_count = 0;
+        if ( network_connection_on == true) {
+            if (sendMailNotification() == true) {
+                must_send_email_immediately = false;
+                waiting_count = 0;
+            } else {
+                must_send_email_immediately = true;
+            }
         }
     }
 
