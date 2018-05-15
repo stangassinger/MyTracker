@@ -143,8 +143,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
         String message = "alt: " + Double.toString(last_alt) + "\n"
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
         waiting_count = 0;
-        //SendSMS sendSMS = new SendSMS();
-        //sendSMS.sendSms(phone_nr, message);
+        SendSMS sendSMS = new SendSMS();
+        sendSMS.sendSms(phone_nr, message);
     }
 
 
