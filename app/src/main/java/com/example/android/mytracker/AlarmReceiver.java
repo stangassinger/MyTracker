@@ -62,7 +62,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        boolean mail_send_success = false;
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();
@@ -70,10 +69,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                     || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE )) {
                 network_connection_on = true;
                 if (must_send_email_immediately){
-                    mail_send_success = sendMailNotification();
-                    if (mail_send_success == true){
-                        must_send_email_immediately = false;
-                    }
+                    mail_send_routine();
                 }
                 Log.i(TAG, "---->  .... Network is connected");
             } else {
@@ -92,10 +88,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
             if ( waiting_count == COUNTING_TARGET) {
                 waiting_count = 0;
                 if ( network_connection_on == true) {
-                    mail_send_success = sendMailNotification();
-                    if (mail_send_success == true){
-                        must_send_email_immediately = false;
-                    }
+                    mail_send_routine();
                 }else{
                     must_send_email_immediately = true;
                 }
@@ -103,16 +96,14 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
 
         if (must_send_email_immediately == true){
-            mail_send_success = sendMailNotification();
-            if (mail_send_success == true){
-                must_send_email_immediately = false;
-            }
+            mail_send_routine();
         }
     }
 
     private void mail_send_routine(){
-
-
+        if (sendMailNotification() == true){
+            must_send_email_immediately = false;
+        }
     }
 
     private boolean sendMailNotification(){
