@@ -84,7 +84,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
 
             if ( waiting_count == COUNTING_TARGET) {
-                waiting_count = 0;
                 if ( network_connection_on == true) {
                     Log.i(TAG, "--------> waiting_count: " + waiting_count);
                     mail_send_routine();
