@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
     // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
     static int immediately_waiting_count = 0;
     // After that time send SMS notification
-    final int COUNTING_TARGET = 2 ; // should be 23 at the final version
+    final int COUNTING_TARGET = 1 ; // should be 23 at the final version
 
 
     public AlarmReceiver() {
@@ -104,6 +104,23 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
         SendMail sm = new SendMail(email, subject, message);
         sm.execute();
+        int i = 0;
+        while (sm.isFinished() == false && i < 9) {
+            i++;
+            try {
+                Thread.sleep(1000);
+            } catch (Exception e) {Log.i(TAG, "------error--> WAITING");}
+            Log.i(TAG, "--------> WAITING");
+        }
+        if (sm.getmailSendSuccess() ){
+
+        }else{
+            Log.i(TAG, "--------> Sending Mail Failed !!!!!");
+        }
+
+
+
+
     }
 
 

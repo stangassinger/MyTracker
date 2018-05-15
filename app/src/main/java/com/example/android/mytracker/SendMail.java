@@ -21,6 +21,8 @@ import javax.mail.internet.MimeMessage;
 public class SendMail extends AsyncTask<Void,Void,Void> {
 
     private final String TAG = "SendMail";
+    private boolean task_finished      = false;
+    private boolean mailsendsuccess    = true;
 
     //Declaring Variables
 
@@ -47,7 +49,8 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.i(TAG, "---->  .... onPreExecute   Message Sent..." );
+        task_finished = true;
+        Log.i(TAG, "---->  .... onPostExecute" );
     }
 
     @Override
@@ -89,9 +92,19 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             Transport.send(mm);
 
         } catch (MessagingException e) {
+            mailsendsuccess = false;
             Log.i(TAG, "Error: Sending email failed !!!" );
             e.printStackTrace();
         }
         return null;
     }
+
+    public boolean isFinished(){
+        return task_finished;
+    }
+
+    public boolean getmailSendSuccess(){
+        return mailsendsuccess;
+    }
+
 }
