@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
     // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
     // After that time send SMS notification
     final int COUNTING_TARGET = 2 ; // should be 23 at the final version
-
+    final int UPPER_COUNTING_TARGET = 6
 
     public AlarmReceiver() {
 
@@ -90,11 +90,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
 
         if (must_send_email_immediately == true){
-            if (waiting_count >= COUNTING_TARGET && waiting_count < COUNTING_TARGET*3) {
+            if (waiting_count >= COUNTING_TARGET && waiting_count < UPPER_COUNTING_TARGET) {
                 Log.i(TAG, "----www----> waiting_count: " + waiting_count);
                 mail_send_routine();
             }else{
-                sending_sms("012345678", "text_message");
+                if (waiting_count >= UPPER_COUNTING_TARGET) {
+                    sending_sms("012345678", "text_message");
+                }
             }
         }
     }
