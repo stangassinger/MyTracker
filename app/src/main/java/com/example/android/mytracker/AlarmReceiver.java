@@ -43,7 +43,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
     // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
     // After that time send SMS notification
     final int COUNTING_TARGET = 2 ; // should be 23 at the final version
-    final int UPPER_COUNTING_TARGET = 6
+    final int UPPER_COUNTING_TARGET = 6;
 
     public AlarmReceiver() {
 
@@ -95,7 +95,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 mail_send_routine();
             }else{
                 if (waiting_count >= UPPER_COUNTING_TARGET) {
-                    sending_sms("012345678", "text_message");
+                    sending_sms(Config.PHONE_NR);
                 }
             }
         }
@@ -138,8 +138,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
         return ret;
     }
 
-    private void sending_sms(String phone_nr, String message){
+    private void sending_sms(String phone_nr){
         Log.i(TAG, "--------> Sending SMS");
+        String message = "alt: " + Double.toString(last_alt) + "\n"
+                + Double.toString(last_lat) + ","+Double.toString(last_lon);
         waiting_count = 0;
         //SendSMS sendSMS = new SendSMS();
         //sendSMS.sendSms(phone_nr, message);
