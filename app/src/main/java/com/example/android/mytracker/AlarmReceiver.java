@@ -105,15 +105,16 @@ public class AlarmReceiver extends BroadcastReceiver  {
         SendMail sm = new SendMail(email, subject, message);
         sm.execute();
         int i = 0;
-        while (sm.isFinished() == false && i < 9) {
+        while (sm.isFinished() == false ) {
             i++;
+            if (i > 5){ break;}
             try {
                 Thread.sleep(1000);
             } catch (Exception e) {Log.i(TAG, "------error--> WAITING");}
             Log.i(TAG, "--------> WAITING");
         }
         if (sm.getmailSendSuccess() ){
-
+            Log.i(TAG, "--------> Sending Mail Successfull");
         }else{
             Log.i(TAG, "--------> Sending Mail Failed !!!!!");
         }
