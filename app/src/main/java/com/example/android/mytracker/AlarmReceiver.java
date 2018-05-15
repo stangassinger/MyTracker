@@ -95,9 +95,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 mail_send_routine();
             }else{
                 Log.i(TAG, "--------> Sending SMS");
-                waiting_count = 0;
-                //SendSMS sendSMS = new SendSMS();
-                //sendSMS.sendSms("012345678", "TEST");
+                sending_sms("012345678", "text_message");
             }
         }
     }
@@ -137,6 +135,12 @@ public class AlarmReceiver extends BroadcastReceiver  {
             ret = false;
         }
         return ret;
+    }
+
+    private void sending_sms(String phone_nr, String message){
+        waiting_count = 0;
+        //SendSMS sendSMS = new SendSMS();
+        //sendSMS.sendSms(phone_nr, message);
     }
 
 
