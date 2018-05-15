@@ -89,6 +89,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
             Transport.send(mm);
 
         } catch (MessagingException e) {
+            Log.i(TAG, "Error: Sending email failed !!!" );
             e.printStackTrace();
         }
         return null;

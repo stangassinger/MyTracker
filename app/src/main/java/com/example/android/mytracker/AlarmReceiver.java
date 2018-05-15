@@ -33,13 +33,17 @@ public class AlarmReceiver extends BroadcastReceiver  {
     static double last_lon = 0;
     static double last_lat = 0;
 
+    static boolean network_connection_on = false;
+
+    static boolean must_send_email_immediately = false;
+
     // Strategy for sending notifications
-    //Wait for 23 hours to finally send notification
+    //Wait for COUNTING_TARGET hours to finally send notification
     static int waiting_count = 0;
-    // Wait another 23 hours where notification is sent as soon as possible
-    static int try_to_send_count = 0;
+    // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
+    static int immediately_waiting_count = 0;
     // After that time send SMS notification
-    final int COUNTING_TARGET = 4 ; // should be 23 at the final version
+    final int COUNTING_TARGET = 2 ; // should be 23 at the final version
 
 
     public AlarmReceiver() {
@@ -63,8 +67,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE
                     && networkInfo.getType() == ConnectivityManager.TYPE_MOBILE ) {
+                network_connection_on = true;
+                if (must_send_email_immediately){
+                    sendMailNotification();
+                }
                 Log.i(TAG, "---->  .... Network is connected");
             } else {
+                network_connection_on = false;
                 Log.i(TAG, "---->  .... No active connection");
             }
         }else{
@@ -77,9 +86,12 @@ public class AlarmReceiver extends BroadcastReceiver  {
             //sendSMS.sendSms("012345678", "TEST");
 
             if ( waiting_count == COUNTING_TARGET) {
-
                 waiting_count = 0;
-                //sendMailNotification();
+                if ( network_connection_on == true) {
+                    sendMailNotification();
+                }else{
+                    must_send_email_immediately = true;
+                }
             }
         }
 
