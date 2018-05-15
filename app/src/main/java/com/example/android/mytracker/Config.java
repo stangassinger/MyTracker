@@ -5,4 +5,5 @@ public class Config {
     public static final String PASSWORD    ="------"; //your-gmail-password
     public static final String SEND_TO     ="------"; //send to
     public static final String PHONE_NR    ="------"; //Phonenumber for SMS
+    public static final String SMTP_HOST   ="mail.gmx.net"; //for example smtp.gmail.com
 }

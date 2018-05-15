@@ -59,7 +59,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
-        props.put("mail.smtp.host", "mail.gmx.net");
+        props.put("mail.smtp.host", Config.SMTP_HOST);
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         props.put("mail.smtp.auth", "true");
@@ -104,7 +104,6 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     public boolean getmailSendSuccess(){
         return mailsendsuccess;
-        //return true;
     }
 
 }
