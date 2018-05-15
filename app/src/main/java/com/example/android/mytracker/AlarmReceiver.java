@@ -95,6 +95,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 mail_send_routine();
             }else{
                 Log.i(TAG, "--------> Sending SMS");
+                waiting_count = 0;
                 //SendSMS sendSMS = new SendSMS();
                 //sendSMS.sendSms("012345678", "TEST");
             }
