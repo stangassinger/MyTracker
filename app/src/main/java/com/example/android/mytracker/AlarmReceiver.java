@@ -91,7 +91,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
         if (must_send_email_immediately == true){
             if (waiting_count >= COUNTING_TARGET && waiting_count < COUNTING_TARGET*3) {
-                Log.i(TAG, "--------> waiting_count: " + waiting_count);
+                Log.i(TAG, "----www----> waiting_count: " + waiting_count);
                 mail_send_routine();
             }else{
                 Log.i(TAG, "--------> Sending SMS");
@@ -106,10 +106,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
             if (sendMailNotification() == true) {
                 must_send_email_immediately = false;
                 waiting_count = 0;
-            } else {
-                must_send_email_immediately = true;
+                return;
             }
         }
+        must_send_email_immediately = true;
     }
 
     private boolean sendMailNotification(){
