@@ -41,9 +41,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
     //Wait for COUNTING_TARGET hours to finally send notification
     static int waiting_count = 0;
     // Wait another COUNTING_TARGET hours where notification is sent as soon as possible
-    static int immediately_waiting_count = 0;
     // After that time send SMS notification
-    final int COUNTING_TARGET = 1 ; // should be 23 at the final version
+    final int COUNTING_TARGET = 2 ; // should be 23 at the final version
 
 
     public AlarmReceiver() {
@@ -78,11 +77,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
             }
         }else{
             waiting_count++;
-            immediately_waiting_count++;
             LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                     new IntentFilter("GPS_DATA"));
 
-
+            Log.i(TAG, "." + waiting_count);
             if ( waiting_count == COUNTING_TARGET) {
                 if ( network_connection_on == true) {
                     Log.i(TAG, "--------> waiting_count: " + waiting_count);
@@ -96,8 +94,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
 
         if (must_send_email_immediately == true){
-            if (immediately_waiting_count < COUNTING_TARGET) {
-                Log.i(TAG, "--------> immediately_waiting_count: " + immediately_waiting_count);
+            if (waiting_count > COUNTING_TARGET && waiting_count < COUNTING_TARGET*2) {
+                Log.i(TAG, "--------> waiting_count: " + waiting_count);
                 mail_send_routine();
             }else{
                 Log.i(TAG, "--------> Sending SMS");
@@ -110,7 +108,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
     private void mail_send_routine(){
         if (sendMailNotification() == true){
             must_send_email_immediately = false;
-            immediately_waiting_count = 0;
             waiting_count = 0;
         }
     }

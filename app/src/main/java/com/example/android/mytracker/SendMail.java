@@ -104,6 +104,7 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     public boolean getmailSendSuccess(){
         return mailsendsuccess;
+        //return true;
     }
 
 }
