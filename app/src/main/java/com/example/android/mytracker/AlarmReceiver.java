@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.BatteryManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -61,6 +62,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_BATTERY_LOW.equals(intent.getAction())){
+            Log.i(TAG, "---->xxxxxxx: " + intent.getAction());
+            Log.i(TAG, "---->  .... Battery LOW!!!");
+            sending_sms(Config.PHONE_NR);
+            return;
+        }
+
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
             ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = conn.getActiveNetworkInfo();

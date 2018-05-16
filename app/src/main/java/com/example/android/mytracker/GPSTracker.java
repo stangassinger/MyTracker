@@ -38,6 +38,7 @@ public class GPSTracker extends Service  implements
 
 
 
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -60,6 +61,12 @@ public class GPSTracker extends Service  implements
         IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
         receiver = new AlarmReceiver();
         this.registerReceiver(receiver, filter);
+
+
+
+
+     //should work with Manifest only   IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
+     //should work with Manifest only   this.registerReceiver(receiver, intentFilter);
 
 
         return START_STICKY;
