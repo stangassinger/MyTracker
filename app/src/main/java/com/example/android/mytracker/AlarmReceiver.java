@@ -62,6 +62,14 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (Intent.ACTION_SHUTDOWN.equals(intent.getAction())){
+            Log.i(TAG, "---->   SHUTDOWN  !!!!!!" + intent.getAction());
+            sending_sms(Config.PHONE_NR, "sht_dwn");
+            return;
+        }
+
+
+
         if (Intent.ACTION_BATTERY_LOW.equals(intent.getAction())){
             Log.i(TAG, "---->xxxxxxx: " + intent.getAction());
             Log.i(TAG, "---->  .... Battery LOW!!!");

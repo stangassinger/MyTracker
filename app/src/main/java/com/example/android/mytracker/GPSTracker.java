@@ -64,7 +64,8 @@ public class GPSTracker extends Service  implements
 
 
 
-
+        IntentFilter filterSh = new IntentFilter(Intent.ACTION_SHUTDOWN);
+        this.registerReceiver(receiver, filterSh);
      //should work with Manifest only   IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
      //should work with Manifest only   this.registerReceiver(receiver, intentFilter);
 
