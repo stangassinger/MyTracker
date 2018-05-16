@@ -65,7 +65,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
         if (Intent.ACTION_BATTERY_LOW.equals(intent.getAction())){
             Log.i(TAG, "---->xxxxxxx: " + intent.getAction());
             Log.i(TAG, "---->  .... Battery LOW!!!");
-            sending_sms(Config.PHONE_NR);
+            sending_sms(Config.PHONE_NR, "bt_low");
             return;
         }
 
@@ -103,7 +103,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 mail_send_routine();
             }else{
                 if (waiting_count >= UPPER_COUNTING_TARGET) {
-                    sending_sms(Config.PHONE_NR);
+                    sending_sms(Config.PHONE_NR, "no_net");
                 }
             }
         }
@@ -146,13 +146,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
         return ret;
     }
 
-    private void sending_sms(String phone_nr){
+    private void sending_sms(String phone_nr, String pre_message){
         Log.i(TAG, "--------> Sending SMS");
         String message = "alt: " + Double.toString(last_alt) + "\n"
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
         waiting_count = 0;
         SendSMS sendSMS = new SendSMS();
-        sendSMS.sendSms(phone_nr, message);
+        sendSMS.sendSms(phone_nr, pre_message + "\n" + message);
     }
 
 
