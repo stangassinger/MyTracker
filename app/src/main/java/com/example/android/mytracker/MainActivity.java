@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                     triggerTime, repeatInterval, notifyPendingIntent);
         }
+        moveTaskToBack(true);
     }
 
     @Override
