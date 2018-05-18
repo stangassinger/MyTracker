@@ -17,25 +17,23 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 
-//Class is extending AsyncTask because this class is going to perform a networking operation
 public class SendMail extends AsyncTask<Void,Void,Void> {
 
     private final String TAG = "SendMail";
     private boolean task_finished      = false;
     private boolean mailsendsuccess    = true;
 
-    //Declaring Variables
+
 
     private Session session;
 
-    //Information to send email
+
     private String email;
     private String subject;
     private String message;
 
-    //Class Constructor
+
     public SendMail( String email, String subject, String message){
-        //Initializing variables
         this.email = email;
         this.subject = subject;
         this.message = message;
@@ -54,11 +52,8 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        //Creating properties
         Properties props = new Properties();
 
-        //Configuring properties for gmail
-        //If you are not using gmail you may need to change the values
         props.put("mail.smtp.host", Config.SMTP_HOST);
         props.put("mail.smtp.socketFactory.port", "465");
         props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -75,19 +70,13 @@ public class SendMail extends AsyncTask<Void,Void,Void> {
                 });
 
         try {
-            //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(session);
 
-            //Setting sender address
             mm.setFrom(new InternetAddress(Config.EMAIL));
-            //Adding receiver
             mm.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
-            //Adding subject
             mm.setSubject(subject);
-            //Adding message
             mm.setText(message);
 
-            //Sending email
             Transport.send(mm);
 
         } catch (MessagingException e) {
