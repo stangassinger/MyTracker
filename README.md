@@ -5,7 +5,7 @@ This android app is tracking GPS position.
   network connection is available and then send a eMail with GPS-Position.
 - If this is also not possible after the second day it will send 
   a SMS with the GPS-Position.
-- Furthermore it will send send SMS when the Smartphone is shutdown.
+- Furthermore it will send SMS when the Smartphone is shutdown.
 
 #todo
   - if the battery level is low it should send SMS     

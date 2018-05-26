@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     private TextView mLocationView;
 
     private static final int NOTIFICATION_ID = 0;
-    final long INTERVAL = 5000*60; //should be 1hour
+    final long INTERVAL = 10000*60; //should be 1hour
 
 
     @Override
