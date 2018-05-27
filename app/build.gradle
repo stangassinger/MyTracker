@@ -4,7 +4,7 @@ android {
     compileSdkVersion 24
     buildToolsVersion "27.0.3"
     defaultConfig {
-        applicationId "com.stangassinger.android.mytracker"
+        applicationId "com.stangassinger.mytracker"
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 1
