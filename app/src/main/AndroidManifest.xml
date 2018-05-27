@@ -28,7 +28,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.example.android.mytracker.MainActivity">
+        <activity android:name="com.stangassinger.mytracker.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,7 +39,7 @@
         </activity>
 
         <receiver
-            android:name="com.example.android.mytracker.AlarmReceiver"
+            android:name="com.stangassinger.mytracker.AlarmReceiver"
             android:enabled="true"
             android:exported="false">
         </receiver>
