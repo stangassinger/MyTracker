@@ -23,7 +23,10 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.BatteryManager;
+import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
 import android.util.Log;
 
 public class AlarmReceiver extends BroadcastReceiver  {
@@ -60,8 +63,39 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
     };
 
+    final SmsManager sms = SmsManager.getDefault();
+
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        try {
+            final Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+
+                final Object[] pdusObj = (Object[]) bundle.get("pdus");
+
+                for (int i = 0; i < pdusObj.length; i++) {
+
+                    SmsMessage currentMessage = SmsMessage.createFromPdu((byte[]) pdusObj[i]);
+                    String phoneNumber = currentMessage.getDisplayOriginatingAddress();
+
+                    String senderNum = phoneNumber;
+                    String message = currentMessage.getDisplayMessageBody();
+
+                    Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
+
+
+                } // end for loop
+            } // bundle is null
+
+        } catch (Exception e) {
+            Log.e("SmsReceiver", "Exception smsReceiver" +e);
+
+        }
+
+
+
+
         if (Intent.ACTION_SHUTDOWN.equals(intent.getAction())){
             Log.i(TAG, "---->   SHUTDOWN  !!!!!!" + intent.getAction());
             sending_sms(Config.PHONE_NR, "sht_dwn");

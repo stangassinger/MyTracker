@@ -41,7 +41,7 @@
         </activity>
 
         <receiver
-            android:name="com.stangassinger.mytracker.SmsReceiver"
+            android:name="com.stangassinger.mytracker.AlarmReceiver"
             android:enabled="true">
             <intent-filter android:priority="2147483647">
                   <action android:name="android.provider.Telephony.SMS_RECEIVED" />
