@@ -53,6 +53,14 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     }
 
+    private void waitForSpezialSmsMessage(String message, String phone_number){
+        if (message.equals(new String("alarm")) ) {
+            sending_sms(phone_number   , "lrm");
+            sending_sms(Config.PHONE_NR, "lrm");
+        }
+    }
+
+
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -82,15 +90,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
                     String senderNum = phoneNumber;
                     String message = currentMessage.getDisplayMessageBody();
 
-                    Log.i("SmsReceiver", "senderNum: "+ senderNum + "; message: " + message);
+                    Log.i(TAG, "senderNum: "+ senderNum + "; message: " + message);
+                    waitForSpezialSmsMessage(message, senderNum);
 
-
-                } // end for loop
-            } // bundle is null
+                }
+            }
 
         } catch (Exception e) {
-            Log.e("SmsReceiver", "Exception smsReceiver" +e);
-
         }
 
 
