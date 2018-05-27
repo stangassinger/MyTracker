@@ -1,4 +1,4 @@
-package com.example.android.mytracker;
+package com.stangassinger.mytracker;
 
 import android.telephony.SmsManager;
 

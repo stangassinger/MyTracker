@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.mytracker;
+package com.stangassinger.mytracker;
 
 import android.app.Activity;
 import android.app.AlarmManager;

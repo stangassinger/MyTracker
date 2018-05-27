@@ -1,4 +1,4 @@
-package com.example.android.mytracker;
+package com.stangassinger.mytracker;
 
 public class Config {
     public static final String EMAIL       ="------"; //your-gmail-username
