@@ -45,13 +45,16 @@ public class MainActivity extends Activity {
         mLocationView.setText("Location received: ------");
 
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
-        long repeatInterval =  INTERVAL;
-        Intent notifyIntent = new Intent(this, AlarmReceiver.class);
-        final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
-                        (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        triggerTime, repeatInterval, notifyPendingIntent);
+        AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
+        if (nextAlarm != null){
+            long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
+            long repeatInterval =  + INTERVAL;
+            Intent notifyIntent = new Intent(this, AlarmReceiver.class);
+            final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+                   (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                   triggerTime, repeatInterval, notifyPendingIntent);
+        }
 
         moveTaskToBack(true);
     }
