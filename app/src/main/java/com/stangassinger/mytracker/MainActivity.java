@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
     private TextView mLocationView;
 
     private static final int NOTIFICATION_ID = 0;
-    final long INTERVAL = 1000*60; //should be 1hour
+    final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES * 4; // should be one hour
 
 
     @Override
@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
-        long repeatInterval =  + INTERVAL;
+        long repeatInterval =  INTERVAL;
         Intent notifyIntent = new Intent(this, AlarmReceiver.class);
         final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
                         (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
