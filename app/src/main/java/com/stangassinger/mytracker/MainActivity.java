@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
         AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
         if (nextAlarm != null){
             long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
-            long repeatInterval =  + INTERVAL;
+            long repeatInterval =  INTERVAL;
             Intent notifyIntent = new Intent(this, AlarmReceiver.class);
             final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
                    (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
