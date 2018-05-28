@@ -68,6 +68,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
             last_alt = intent.getDoubleExtra("message_alt",0);
             last_lon = intent.getDoubleExtra("message_lon",0);
             last_lat = intent.getDoubleExtra("message_lat",0);
+            Log.i(TAG, "BroadcastReceiver lon: "+ last_lon + "; lat: " + last_lat);
         }
     };
 
