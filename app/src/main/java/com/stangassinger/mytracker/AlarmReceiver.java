@@ -50,7 +50,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
     final int UPPER_COUNTING_TARGET = 24;
 
     public AlarmReceiver() {
-
+        Log.i(TAG, "Constructor");
     }
 
     private void waitForSpezialSmsMessage(String message, String phone_number){

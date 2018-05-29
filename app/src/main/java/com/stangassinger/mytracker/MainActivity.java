@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.i(TAG, "onCreate !!!!!!!!!!!");
         mLocationView = new TextView(this);
         setContentView(mLocationView);
         mLocationView.setText("Location received: ------");
@@ -47,6 +48,7 @@ public class MainActivity extends Activity {
         final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
         if (nextAlarm != null){
+            Log.i(TAG, "setInexactRepeating Alarm");
             long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
             long repeatInterval =  INTERVAL;
             Intent notifyIntent = new Intent(this, AlarmReceiver.class);
@@ -63,6 +65,7 @@ public class MainActivity extends Activity {
     public void onStart(){
         super.onStart();
         startService(new Intent(getBaseContext(), GPSTracker.class));
+        Log.i(TAG, "startService GPS Tracker");
     }
 
 
