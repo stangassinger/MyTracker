@@ -113,6 +113,7 @@ public class GPSTracker extends Service  implements
         intent.putExtra("message_lon", location.getLongitude());
         intent.putExtra("message_lat", location.getLatitude());
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+        Log.i(TAG, "sendMessage " + location.getLongitude());
     }
 
 

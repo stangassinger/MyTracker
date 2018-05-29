@@ -76,7 +76,8 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
+        LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
+                new IntentFilter("GPS_DATA"));
         try {
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {
@@ -134,9 +135,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
             }
         }else{
             waiting_count++;
-            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
-                    new IntentFilter("GPS_DATA"));
-
             Log.i(TAG, "." + waiting_count);
             if ( waiting_count == COUNTING_TARGET) {
                 Log.i(TAG, "---" + last_lon + "-----> waiting_count: " + waiting_count);
