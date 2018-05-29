@@ -30,7 +30,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.stangassinger.mytracker.MainActivity">
+        <activity
+            android:name="com.stangassinger.mytracker.MainActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity="">
             <intent-filter>
                 <action android:name="android.intent.action.ACTION_BATTERY_LOW"/>
                 <action android:name="android.intent.action.MAIN" />
