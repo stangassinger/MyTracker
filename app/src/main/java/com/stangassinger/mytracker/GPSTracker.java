@@ -2,6 +2,8 @@ package com.stangassinger.mytracker;
 
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -10,6 +12,7 @@ import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
@@ -28,13 +31,12 @@ public class GPSTracker extends Service  implements
 
 
     private final String TAG = "GPSTracker";
-
-
     private GoogleApiClient mGoogleApiClient;
-
     private LocationRequest mLocationRequest;
-
     private AlarmReceiver receiver;
+
+    private static final int NOTIFICATION_ID = 0;
+    final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES * 4; // should be one hour
 
 
 
@@ -66,8 +68,18 @@ public class GPSTracker extends Service  implements
 
         IntentFilter filterSh = new IntentFilter(Intent.ACTION_SHUTDOWN);
         this.registerReceiver(receiver, filterSh);
-     //should work with Manifest only   IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_LOW);
-     //should work with Manifest only   this.registerReceiver(receiver, intentFilter);
+
+
+        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+
+        Log.i(TAG, "setInexactRepeating Alarm");
+        long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
+        long repeatInterval =  INTERVAL;
+        Intent notifyIntent = new Intent(this, AlarmReceiver.class);
+        final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
+                    (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    triggerTime, repeatInterval, notifyPendingIntent);
 
 
         return START_STICKY;

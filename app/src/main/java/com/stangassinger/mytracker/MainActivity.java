@@ -16,8 +16,10 @@
 package com.stangassinger.mytracker;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -33,8 +35,19 @@ public class MainActivity extends Activity {
     private final String TAG = "MyTracker";
     private TextView mLocationView;
 
-    private static final int NOTIFICATION_ID = 0;
-    final long INTERVAL = AlarmManager.INTERVAL_FIFTEEN_MINUTES * 4; // should be one hour
+
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
+    }
 
 
     @Override
@@ -45,21 +58,16 @@ public class MainActivity extends Activity {
         setContentView(mLocationView);
         mLocationView.setText("Location received: ------");
 
-        final AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-        AlarmManager.AlarmClockInfo nextAlarm = alarmManager.getNextAlarmClock();
-        if (nextAlarm != null){
-            Log.i(TAG, "setInexactRepeating Alarm");
-            long triggerTime = SystemClock.elapsedRealtime() + INTERVAL;
-            long repeatInterval =  INTERVAL;
-            Intent notifyIntent = new Intent(this, AlarmReceiver.class);
-            final PendingIntent notifyPendingIntent = PendingIntent.getBroadcast
-                   (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                   triggerTime, repeatInterval, notifyPendingIntent);
 
+
+
+
+        if (!isMyServiceRunning(GPSTracker.class )) {
             startService(new Intent(getBaseContext(), GPSTracker.class));
             Log.i(TAG, "startService GPS Tracker");
         }
+
+
 
         moveTaskToBack(true);
     }
