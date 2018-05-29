@@ -127,10 +127,10 @@ public class AlarmReceiver extends BroadcastReceiver  {
                 if (must_send_email_immediately){
                     mail_send_routine();
                 }
-                Log.i(TAG, "---->  .... Network is connected");
+                Log.i(TAG, "---->  .... Network is connected " + last_lon);
             } else {
                 network_connection_on = false;
-                Log.i(TAG, "---->  .... No active connection");
+                Log.i(TAG, "---->  .... No active connection " + last_lon);
             }
         }else{
             waiting_count++;
@@ -139,7 +139,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
             Log.i(TAG, "." + waiting_count);
             if ( waiting_count == COUNTING_TARGET) {
-                Log.i(TAG, "--------> waiting_count: " + waiting_count);
+                Log.i(TAG, "---" + last_lon + "-----> waiting_count: " + waiting_count);
                 mail_send_routine();
             }
 
@@ -148,7 +148,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
         if (must_send_email_immediately == true){
             if (waiting_count >= COUNTING_TARGET && waiting_count < UPPER_COUNTING_TARGET) {
-                Log.i(TAG, "----www----> waiting_count: " + waiting_count);
+                Log.i(TAG, "----gps:" + last_lon +"  ----> waiting_count: " + waiting_count);
                 mail_send_routine();
             }else{
                 if (waiting_count >= UPPER_COUNTING_TARGET) {
@@ -196,7 +196,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
     }
 
     private void sending_sms(String phone_nr, String pre_message){
-        Log.i(TAG, "--------> Sending SMS");
+        Log.i(TAG, "--------> Sending SMS: " + last_lon);
         String message = "alt: " + Double.toString(last_alt) + "\n"
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
         waiting_count = 0;
