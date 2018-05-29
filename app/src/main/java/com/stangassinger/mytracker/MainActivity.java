@@ -56,6 +56,9 @@ public class MainActivity extends Activity {
                    (this, NOTIFICATION_ID, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             alarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                    triggerTime, repeatInterval, notifyPendingIntent);
+
+            startService(new Intent(getBaseContext(), GPSTracker.class));
+            Log.i(TAG, "startService GPS Tracker");
         }
 
         moveTaskToBack(true);
@@ -64,8 +67,6 @@ public class MainActivity extends Activity {
     @Override
     public void onStart(){
         super.onStart();
-        startService(new Intent(getBaseContext(), GPSTracker.class));
-        Log.i(TAG, "startService GPS Tracker");
     }
 
 
