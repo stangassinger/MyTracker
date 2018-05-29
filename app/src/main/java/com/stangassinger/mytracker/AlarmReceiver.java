@@ -31,6 +31,7 @@ import android.util.Log;
 
 public class AlarmReceiver extends BroadcastReceiver  {
 
+    private static boolean STARTUP_MAIL_SENT = false;
     private static final int NOTIFICATION_ID = 0;
     private final String TAG = "AlarmReceiver";
     static double last_alt = 0;
@@ -58,6 +59,20 @@ public class AlarmReceiver extends BroadcastReceiver  {
             sending_sms(phone_number   , "lrm");
             sending_sms(Config.PHONE_NR, "lrm");
         }
+    }
+
+    private void sendStartupMail(){
+        if (STARTUP_MAIL_SENT){
+            return;
+        }
+
+        if ( network_connection_on == true) {
+            if (sendMailNotification("Starting device !!\n") == true) {
+                STARTUP_MAIL_SENT = true;
+                return;
+            }
+        }
+        return;
     }
 
 
