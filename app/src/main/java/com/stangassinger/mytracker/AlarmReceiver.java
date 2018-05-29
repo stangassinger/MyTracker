@@ -126,7 +126,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
                     || networkInfo.getType() == ConnectivityManager.TYPE_MOBILE )) {
                 network_connection_on = true;
                 if (must_send_email_immediately){
-                    mail_send_routine();
+                    mail_send_routine("Net activated \n");
                 }
                 Log.i(TAG, "---->  .... Network is connected " + last_lon);
             } else {
@@ -138,7 +138,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
             Log.i(TAG, "." + waiting_count);
             if ( waiting_count == COUNTING_TARGET) {
                 Log.i(TAG, "---" + last_lon + "-----> waiting_count: " + waiting_count);
-                mail_send_routine();
+                mail_send_routine("default\n");
             }
 
 
@@ -147,7 +147,7 @@ public class AlarmReceiver extends BroadcastReceiver  {
         if (must_send_email_immediately == true){
             if (waiting_count >= COUNTING_TARGET && waiting_count < UPPER_COUNTING_TARGET) {
                 Log.i(TAG, "----gps:" + last_lon +"  ----> waiting_count: " + waiting_count);
-                mail_send_routine();
+                mail_send_routine("Net available:\n");
             }else{
                 if (waiting_count >= UPPER_COUNTING_TARGET) {
                     sending_sms(Config.PHONE_NR, "no_net");
@@ -156,9 +156,9 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
     }
 
-    private void mail_send_routine(){
+    private void mail_send_routine(String pre_message){
         if ( network_connection_on == true) {
-            if (sendMailNotification() == true) {
+            if (sendMailNotification(pre_message) == true) {
                 must_send_email_immediately = false;
                 waiting_count = 0;
                 return;
@@ -167,13 +167,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
         must_send_email_immediately = true;
     }
 
-    private boolean sendMailNotification(){
+    private boolean sendMailNotification(String pre_message){
         boolean ret = false;
         String email = Config.SEND_TO;
         String subject = "smart-location";
         String message = "alt: " + Double.toString(last_alt) + "\n"
                 + Double.toString(last_lat) + ","+Double.toString(last_lon);
-        SendMail sm = new SendMail(email, subject, message);
+        SendMail sm = new SendMail(email, subject, pre_message + message);
         sm.execute();
         int i = 0;
         while (sm.isFinished() == false ) {
