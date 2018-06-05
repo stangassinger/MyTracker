@@ -31,6 +31,7 @@ import android.util.Log;
 
 public class AlarmReceiver extends BroadcastReceiver  {
 
+    private static boolean LOCALBROADCASTMANAGER_REGISTERED = false;
     private static boolean STARTUP_MAIL_SENT = false;
     private static final int NOTIFICATION_ID = 0;
     private final String TAG = "AlarmReceiver";
@@ -92,6 +93,13 @@ public class AlarmReceiver extends BroadcastReceiver  {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (LOCALBROADCASTMANAGER_REGISTERED == false) {
+            LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
+                    new IntentFilter("GPS_DATA"));
+            LOCALBROADCASTMANAGER_REGISTERED = true;
+        }
+
+
         LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
                 new IntentFilter("GPS_DATA"));
         try {
