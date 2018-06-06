@@ -116,6 +116,7 @@ public class GPSTracker extends Service  implements
     @Override
     public void onDestroy() {
         super.onDestroy();
+        Log.i(TAG, "--------->    !!!!!!!! onDestroy  !!!! ");
     }
 
     private void sendMessage(Location location){
