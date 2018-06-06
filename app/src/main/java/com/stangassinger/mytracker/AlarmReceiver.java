@@ -100,8 +100,6 @@ public class AlarmReceiver extends BroadcastReceiver  {
         }
 
 
-        LocalBroadcastManager.getInstance(context).registerReceiver(mMessageReceiver,
-                new IntentFilter("GPS_DATA"));
         try {
             final Bundle bundle = intent.getExtras();
             if (bundle != null) {

@@ -94,7 +94,8 @@ public class GPSTracker extends Service  implements
     public void onConnected(Bundle bundle) {
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        mLocationRequest.setInterval(600000); // Update location every 10 minutes
+        mLocationRequest.setInterval(1000000); // Update location every 16 minutes
+        mLocationRequest.setFastestInterval(800000);
 
         LocationServices.FusedLocationApi.requestLocationUpdates(
                 mGoogleApiClient, mLocationRequest, this);
